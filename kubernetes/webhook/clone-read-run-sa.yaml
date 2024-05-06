@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: clone-read-run-sa
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: trigger-role
+rules:
+# Permissions for every EventListener deployment to function
+- apiGroups: ["triggers.tekton.dev"]
+  resources: ["clustertriggerbindings", "eventlisteners", "triggerbindings", "triggertemplates", "triggers", "interceptors", "clusterinterceptors"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  # secrets are only needed for Github/Gitlab interceptors
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+# Permissions to create resources in associated TriggerTemplates
+- apiGroups: ["tekton.dev"]
+  resources: ["pipelineruns", "pipelineresources", "taskruns"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: triggers-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: clone-read-run-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: trigger-role

@@ -1,0 +1,37 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: database-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+reclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: database-pv
+spec:
+  storageClassName: database-storage
+  volumeMode: Filesystem
+  capacity:
+    storage: {{ .Values.global.database.capacity }}Gi
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: {{ .Values.global.database.parent_path}}{{ .Values.global.database.filename}}
+    type: DirectoryOrCreate # ディレクトリが存在しない場合は作成
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-pvc
+  namespace: {{ .Values.global.namespace}}
+spec:
+  storageClassName: database-storage
+  accessModes:
+    - ReadOnlyMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.global.database.capacity }}Gi

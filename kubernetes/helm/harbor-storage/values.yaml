@@ -1,0 +1,26 @@
+# Default values for harbor-storage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  namespace: harbor
+  jobservice:
+    capacity: 1 #Gi
+    parent_path: /home/ubuntu/
+    filename: my-pv-jobservice
+  database:
+    capacity: 1 #Gi
+    parent_path: /home/ubuntu/
+    filename: my-pv-database
+  redis:
+    capacity: 5 #Gi
+    parent_path: /home/ubuntu/
+    filename: my-pv-redis
+  trivy:
+    capacity: 1 #Gi
+    parent_path: /home/ubuntu/
+    filename: my-pv-trivy
+  registry:
+    capacity: 5 #Gi
+    parent_path: /home/ubuntu/
+    filename: my-pv-registry

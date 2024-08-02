@@ -1,0 +1,10 @@
+resources:
+- ../../base
+
+patches:
+  - path: pod-patch.yaml
+    target:
+      labelSelector: "app=nginx-pod"
+  - path: service-patch.yaml
+    target:
+      labelSelector: "app=nginx-svc"

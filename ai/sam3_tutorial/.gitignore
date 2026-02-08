@@ -1,0 +1,11 @@
+.venv/
+.venv_py39/
+__pycache__/
+*.pyc
+.DS_Store
+/data/
+/outputs/
+*.log
+*.pt
+*.pth
+*.safetensors

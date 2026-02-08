@@ -1,0 +1,9 @@
+torch>=2.7.0
+torchvision>=0.20.0
+torchaudio>=2.7.0
+transformers>=5.0.0
+huggingface_hub>=0.24.0
+pycocotools>=2.0.7
+Pillow>=10.0.0
+numpy>=1.26.0
+requests>=2.31.0
